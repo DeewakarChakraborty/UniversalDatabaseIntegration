@@ -1,0 +1,129 @@
+<HTML>
+<HEAD>
+<TITLE> Myadmin </TITLE>
+<META NAME="Author" CONTENT="vamsi">
+<STYLE>
+#t1 {
+	position:absolute;   
+	margin-left:210px;   
+	margin-top:100px;
+	width:340px;
+	height:33px;   
+	background:#336699;   
+	font-family:Serif;
+	font-weight:bold;
+	font-size:20px;   
+	color:#ffffff;
+	text-align:center;
+	border-style:double;	
+	border-color:black;
+	border-width:2px;
+}
+#t2 { 
+	position:absolute;   
+	margin-left:210px;   
+	margin-top:134px;
+	width:340px;
+	height:180px;   
+	background:#f5f5f5;   
+	font-family:Tahoma;
+	font-weight:bold;
+	font-size:14px;   
+	color:black;
+	border-style:groove;
+	border-color:black;
+	border-width:1px;  
+}
+input {
+	height:26px;
+	width:240px;
+	font-size:14px;
+}
+select {
+	font-size:16px;
+}
+</STYLE>
+<SCRIPT LANGUAGE="javascript">
+
+var onImages    = new Array();
+var offImages   = new Array();
+
+function verify() {
+	var ur = document.loginform.url.value;
+	var id = document.loginform.userid.value;
+	var pa = document.loginform.pass.value;
+	if(ur == null || ur == "" || ur == " "||id == null || id == "" || id == " "|| pa == null || pa == "" || pa == " ") {
+		alert("All Field must be entered.");
+		
+	}
+	
+	else document.loginform.submit();
+}
+function isEmpty(id) {
+  if(id.value==null || id.value=="" || id.value==" ") {
+    alert(id.name + " must be entered.");
+    id.focus(); 
+  }
+}
+function empty() {
+	document.loginform.driver.value="com.mysql.jdbc.Driver";
+	document.loginform.url.value ="jdbc:mysql://localhost:3306/edi";
+	document.loginform.userid.focus();
+}
+function down(id) {
+	if(id == 1) document.loginform.pic1.src = onImages[id-1].src;
+	if(id == 2) document.loginform.pic2.src = onImages[id-1].src;	
+}
+function up(id) {
+	if(id == 1) document.loginform.pic1.src = offImages[id-1].src;
+	if(id == 2) document.loginform.pic2.src = offImages[id-1].src;	
+}
+function load() {
+	onImages[0] = new Image();
+	onImages[1] = new Image();
+	onImages[0].src = "pics/login2.jpg";
+	onImages[1].src = "pics/reset2.jpg";
+
+	offImages[0] = new Image();
+	offImages[1] = new Image();
+	offImages[0].src = "pics/login1.jpg";
+	offImages[1].src = "pics/reset1.jpg";
+
+	
+	document.loginform.userid.focus();
+}
+function setURL() {
+	var i = document.loginform.driver.selectedIndex;
+	
+	if(i == 1) document.loginform.url.value = "jdbc:mysql://localhost:3306/edi";
+	else if(i == 2) document.loginform.url.value ="jdbc:oracle:thin:@localhost:1521:xe";
+}
+</SCRIPT>
+</HEAD>
+<BODY BGCOLOR="#f5f5f5" onLoad="load()">
+<FORM NAME="loginform" METHOD="post" ACTION="LoadAll">
+<TABLE align="center" id="t1"><TR><TD>DATABASE LOGIN</TD></TR></TABLE>
+<TABLE align="center" id="t2">
+<TR><TD align="center">Driver</TD>
+	<TD align="center">
+		<SELECT name="driver" onChange="setURL()" autofocus="autofocus">
+			<OPTION>select</OPTION>
+			<OPTION>com.mysql.jdbc.Driver</OPTION>
+			<OPTION>oracle.jdbc.driver.OracleDriver</OPTION>
+		</SELECT>
+	</TD>
+</TR>
+<TR><TD align="center">URL</TD>
+	<TD align="center"><INPUT type="text" name="url" size="32" autofocus="autofocus "></TD></TR>
+<TR><TD align="center">Username</TD>
+	<TD align="center"><input type="text" name="userid" size="32" ></TD></TR>
+<TR><TD align="center">Password</TD>
+	<TD align="center"><input type="password" name="pass" size="32" ></TD></TR>
+<TR><TD align="center" colspan="2">
+		<IMG name="pic1" src="pics/login1.jpg" border="0" onMouseOut="up(1)" STYLE="cursor:hand" onMouseDown="down(1)" onMouseUp="up(1)" onClick="verify()">&nbsp&nbsp&nbsp
+		<img name="pic2" src="pics/reset1.jpg" border="0" onMouseOut="up(2)" STYLE="cursor:hand" onMouseDown="down(2)"  onMouseUp="up(2)" onClick="empty()">
+	</TD></TR>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>
